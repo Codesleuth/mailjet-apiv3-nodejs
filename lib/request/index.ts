@@ -241,23 +241,23 @@ class Request {
     return this;
   }
 
-  public async request<TBody extends TRequestData>(
+  public async request<TBody extends TRequestData, TResponseBody>(
     data?: TRequestData,
     params?: TRequestParams,
     performAPICall?: true,
-  ): Promise<ILibraryResponse<TBody>>
+  ): Promise<ILibraryResponse<TResponseBody>>
 
-  public async request<TBody extends TRequestData, TParams extends TUnknownRec>(
+  public async request<TBody extends TRequestData, TParams extends TUnknownRec, TResponseBody>(
     data?: TBody,
     params?: TParams,
     performAPICall?: false,
-  ): Promise<ILibraryLocalResponse<TBody, TParams>>
+  ): Promise<ILibraryLocalResponse<TResponseBody, TParams>>
 
-  public async request<TBody extends TRequestData, TParams extends TUnknownRec>(
+  public async request<TBody extends TRequestData, TParams extends TUnknownRec, TResponseBody>(
     data: TRequestData | TBody = {},
     params: TRequestParams | TParams = {},
     performAPICall = true,
-  ): Promise<ILibraryResponse<TBody> | ILibraryLocalResponse<TBody, TParams>> {
+  ): Promise<ILibraryResponse<TResponseBody> | ILibraryLocalResponse<TResponseBody, TParams>> {
     const url = this.buildFullUrl();
     this.setBaseURL(this.resource);
 
@@ -268,7 +268,7 @@ class Request {
         body,
         params,
         url,
-      } as ILibraryLocalResponse<TBody, TParams>;
+      } as ILibraryLocalResponse<TResponseBody, TParams>;
     }
 
     try {
